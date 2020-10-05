@@ -1,0 +1,48 @@
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+
+@import '~@blueprintjs/core/lib/css/blueprint.css';
+@import '~@blueprintjs/icons/lib/css/blueprint-icons.css';
+@import '~@blueprintjs/core/lib/scss/variables';
+
+
+.bp3-dark {
+  background-color: $dark-gray4;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.iframe-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 50px;
+
+  flex-direction: column;
+  align-items: center;
+}
+
+.iframe-settings {
+  min-width: 350px;
+  padding: 10px 15px;
+}
+
+.iframe-ref {
+  align-self: center;
+}
+
+.log-viewer-container {
+  align-self: flex-start;
+  width: 100%;
+}
+
+.no-logs {
+  font-style: italic;
+}
+
+.bp3-navbar-group .bp3-switch {
+  margin-bottom: 0;
+}
