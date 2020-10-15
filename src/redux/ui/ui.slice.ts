@@ -4,12 +4,14 @@ interface State {
   darkMode: boolean;
   logViewerOpen: boolean;
   codeViewerOpen: boolean;
+  demoMode: boolean;
 }
 
 const INITIAL_STATE: State = {
   darkMode: false,
   logViewerOpen: false,
   codeViewerOpen: false,
+  demoMode: false,
 };
 
 const uiSlice = createSlice({
@@ -25,12 +27,30 @@ const uiSlice = createSlice({
     toggleCodeViewerOpen: (state) => {
       state.codeViewerOpen = !state.codeViewerOpen;
     },
+    toggleDemoMode: (state) => {
+      state.demoMode = !state.demoMode;
+    },
+    leaveDemoMode: (state) => {
+      state.demoMode = false;
+    },
   },
 });
 
 export default uiSlice;
 
 const actions = uiSlice.actions;
-const { toggleDarkMode, toggleLogViewerOpen, toggleCodeViewerOpen } = actions;
+const {
+  toggleDarkMode,
+  toggleLogViewerOpen,
+  toggleCodeViewerOpen,
+  toggleDemoMode,
+  leaveDemoMode,
+} = actions;
 
-export { toggleDarkMode, toggleLogViewerOpen, toggleCodeViewerOpen };
+export {
+  toggleDarkMode,
+  toggleLogViewerOpen,
+  toggleCodeViewerOpen,
+  toggleDemoMode,
+  leaveDemoMode,
+};
