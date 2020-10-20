@@ -26,12 +26,15 @@
 }
 
 .iframe-settings {
+  width: 350px;
   min-width: 350px;
   padding: 10px 15px;
 }
 
 .iframe-ref {
+  transition: all 1s ease;
   align-self: center;
+  z-index: 15;
 }
 
 .log-viewer-container {
@@ -45,4 +48,9 @@
 
 .bp3-navbar-group .bp3-switch {
   margin-bottom: 0;
+}
+
+
+.demo-mode .iframe-settings {
+  display: none;
 }

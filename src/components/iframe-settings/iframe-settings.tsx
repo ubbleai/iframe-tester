@@ -1,6 +1,13 @@
 import React, { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, FormGroup, InputGroup, Switch } from "@blueprintjs/core";
+import {
+  Button,
+  Collapse,
+  Divider,
+  FormGroup,
+  InputGroup,
+  Switch,
+} from "@blueprintjs/core";
 import {
   selectAllowCamera,
   selectHeight,
@@ -15,12 +22,17 @@ import {
   updateIFrame,
 } from "redux/app/app.slice";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { toggleCodeViewerOpen } from "redux/ui/ui.slice";
+import { selectCodeViewerOpen } from "redux/ui/ui.selectors";
+
+import { CodeViewer } from "components/code-viewer";
 
 export const IFrameSettings: React.FC = () => {
   const url = useSelector(selectUrl);
   const height = useSelector(selectHeight);
   const width = useSelector(selectWidth);
   const allowCamera = useSelector(selectAllowCamera);
+  const codeViewerOpen = useSelector(selectCodeViewerOpen);
   const dispatch = useDispatch();
   const submit = () => {
     dispatch(updateIFrame());
@@ -47,6 +59,12 @@ export const IFrameSettings: React.FC = () => {
       dispatch(setter(checked));
     };
   };
+
+  const doToggleCodeViewer = () => {
+    dispatch(toggleCodeViewerOpen());
+  };
+
+  const canOpenCodeViewer = !!url;
 
   return (
     <div className="iframe-settings">
@@ -90,6 +108,20 @@ export const IFrameSettings: React.FC = () => {
         />
       </FormGroup>
       <Button onClick={submit} text="Update" icon="refresh" intent="primary" />
+
+      <Divider />
+
+      <Button
+        intent="none"
+        icon="code"
+        onClick={doToggleCodeViewer}
+        disabled={!canOpenCodeViewer}
+        active={codeViewerOpen}
+      />
+
+      <Collapse isOpen={codeViewerOpen}>
+        {canOpenCodeViewer && <CodeViewer />}
+      </Collapse>
     </div>
   );
 };

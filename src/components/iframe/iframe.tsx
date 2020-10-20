@@ -7,6 +7,8 @@ import {
   selectWidth,
 } from "../../redux/app/app.selectors";
 import { addLog, resetLogs } from "../../redux/app/app.slice";
+import { selectDemoMode } from "../../redux/ui/ui.selectors";
+import { leaveDemoMode } from "../../redux/ui/ui.slice";
 
 declare const Ubble: any;
 
@@ -20,6 +22,7 @@ export const Iframe = ({ refreshTs }: Props) => {
   const width = useSelector(selectWidth);
   const height = useSelector(selectHeight);
   const allowCamera = useSelector(selectAllowCamera);
+  const demoMode = useSelector(selectDemoMode);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,17 +36,25 @@ export const Iframe = ({ refreshTs }: Props) => {
           dispatch(
             addLog({
               date: Date.now(),
-              content: JSON.stringify(event),
+              content: JSON.stringify(event, null, 4),
             })
           );
+          if (demoMode) {
+            dispatch(leaveDemoMode());
+            ubble.destroy();
+          }
         },
         onAbort: (event: any) => {
           dispatch(
             addLog({
               date: Date.now(),
-              content: JSON.stringify(event),
+              content: JSON.stringify(event, null, 4),
             })
           );
+          if (demoMode) {
+            dispatch(leaveDemoMode());
+            ubble.destroy();
+          }
         },
       },
     });

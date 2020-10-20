@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Collapse, Pre } from "@blueprintjs/core";
 
 import { selectLogs } from "redux/app/app.selectors";
+import { selectLogViewerOpen } from "redux/ui/ui.selectors";
+import { toggleLogViewerOpen } from "redux/ui/ui.slice";
 
 export const LogViewer = () => {
-  const [isOpen, toggleOpen] = useState<boolean>(false);
+  const isOpen = useSelector(selectLogViewerOpen);
+
+  const dispatch = useDispatch();
 
   const logs = useSelector(selectLogs);
 
   const onClickToggle = () => {
-    toggleOpen(!isOpen);
+    dispatch(toggleLogViewerOpen());
   };
 
   const content =
