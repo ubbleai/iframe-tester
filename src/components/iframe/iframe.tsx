@@ -63,7 +63,7 @@ export const Iframe = ({ refreshTs }: Props) => {
       dispatch(resetLogs);
       ubble.destroy();
     };
-  }, [refreshTs]);
+  }, [refreshTs, allowCamera, demoMode, dispatch, height, ref, url, width]);
 
   return <div ref={ref} className="iframe-ref" />;
 };
