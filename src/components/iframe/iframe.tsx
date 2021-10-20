@@ -4,7 +4,7 @@ import {
   selectAllowCamera,
   selectHeight,
   selectUrl,
-  selectWidth,
+  selectWidth
 } from "../../redux/app/app.selectors";
 import { addLog, resetLogs } from "../../redux/app/app.slice";
 import { selectDemoMode } from "../../redux/ui/ui.selectors";
@@ -25,45 +25,48 @@ export const Iframe = ({ refreshTs }: Props) => {
   const demoMode = useSelector(selectDemoMode);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const ubble = new Ubble.IDV(ref.current, {
-      height: height,
-      width: width,
-      identificationUrl: url,
-      allowCamera: allowCamera,
-      events: {
-        onComplete: (event: any) => {
-          dispatch(
-            addLog({
-              date: Date.now(),
-              content: JSON.stringify(event, null, 4),
-            })
-          );
-          if (demoMode) {
-            dispatch(leaveDemoMode());
-            ubble.destroy();
+  useEffect(
+    () => {
+      const ubble = new Ubble.IDV(ref.current, {
+        height: height,
+        width: width,
+        identificationUrl: url,
+        allowCamera: allowCamera,
+        events: {
+          onComplete: (event: any) => {
+            dispatch(
+              addLog({
+                date: Date.now(),
+                content: JSON.stringify(event, null, 4)
+              })
+            );
+            if (demoMode) {
+              dispatch(leaveDemoMode());
+              ubble.destroy();
+            }
+          },
+          onAbort: (event: any) => {
+            dispatch(
+              addLog({
+                date: Date.now(),
+                content: JSON.stringify(event, null, 4)
+              })
+            );
+            if (demoMode) {
+              dispatch(leaveDemoMode());
+              ubble.destroy();
+            }
           }
-        },
-        onAbort: (event: any) => {
-          dispatch(
-            addLog({
-              date: Date.now(),
-              content: JSON.stringify(event, null, 4),
-            })
-          );
-          if (demoMode) {
-            dispatch(leaveDemoMode());
-            ubble.destroy();
-          }
-        },
-      },
-    });
+        }
+      });
 
-    return () => {
-      dispatch(resetLogs);
-      ubble.destroy();
-    };
-  }, [refreshTs, allowCamera, demoMode, dispatch, height, ref, url, width]);
+      return () => {
+        dispatch(resetLogs);
+        ubble.destroy();
+      };
+    },
+    [refreshTs]
+  );
 
   return <div ref={ref} className="iframe-ref" />;
 };
