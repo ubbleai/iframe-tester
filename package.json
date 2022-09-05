@@ -2,6 +2,7 @@
   "name": "iframe-sdk-demo",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ubbleai.github.ui/iframe-tester/",
   "dependencies": {
     "@blueprintjs/core": "^3.33.0",
     "@reduxjs/toolkit": "^1.4.0",
