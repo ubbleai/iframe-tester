@@ -56,6 +56,18 @@ export const Iframe = ({ refreshTs }: Props) => {
               dispatch(leaveDemoMode());
               ubble.destroy();
             }
+          },
+          onExpired: (event: any) => {
+            dispatch(
+                addLog({
+                  date: Date.now(),
+                  content: JSON.stringify(event, null, 4)
+                })
+            );
+            if (demoMode) {
+              dispatch(leaveDemoMode());
+              ubble.destroy();
+            }
           }
         }
       });
